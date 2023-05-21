@@ -91,10 +91,16 @@ async function run() {
         app.get('/seller', async (req, res) => {
             let query = {};
             if (req.query?.email) {
-                query = { seller_email : req.query.email }
+                query = { seller_email: req.query.email }
             }
             const result = await allToyCollection.find(query).toArray();
             res.send(result);
+        })
+        // delete
+        app.delete("/delete/:id", async (req, res) => {
+            const id = req.params.id
+            const result = await allToyCollection.deleteOne({ _id: new ObjectId(id) })
+            res.send(result)
         })
 
         // Send a ping to confirm a successful connection
